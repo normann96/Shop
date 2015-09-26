@@ -9,6 +9,11 @@
 int _tmain(int argc, _TCHAR* argv[])
 {
 
+// 	int temp = SecurityInput::inputAnyInteger(2);
+// 	std::cout << temp << std::endl;
+
+//	_getch();
+
 	Shop *pMyShop = new Shop;
 	do 
 	{

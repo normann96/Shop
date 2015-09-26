@@ -183,6 +183,7 @@ int SecurityInput::inputAnyInteger( int max )
 	while(true)
 	{
 		a = _getch();								// press any key
+		
 		if (a >= '0' && a <= b && iCurIndex < 10)
 		{
 			numberCharAr[iCurIndex++] = a;			// int max = 2 147 483 647

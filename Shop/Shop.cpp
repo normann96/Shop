@@ -27,8 +27,8 @@ Shop::Shop() : m_nCountLibrary(0), m_pHmod(nullptr), m_pPathNameDLL(NULL), m_pCa
 Shop::~Shop()
 {
 	this->SaveBalance();
-	for (unsigned int i = 0; i < m_nCountLibrary; i++)
-		this->Save(i);
+ 	for (unsigned int i = 0; i < m_nCountLibrary; i++)
+ 		this->Save(i);
 
 	if (m_pHmod)
 		delete [] m_pHmod;
@@ -425,11 +425,19 @@ void Shop::Buy()
 		{
 		case 1:
 			{
+				system("cls");
+				this->ShowBalance();
+				std::cout << std::endl;
+				this->ShowAllProduct(chooseCategory-1);
 				this->BuyNewProduct(chooseCategory-1);
 				break;
 			}
 		case 2:
 			{
+				system("cls");
+				this->ShowBalance();
+				std::cout << std::endl;
+				this->ShowAllProduct(chooseCategory-1);
 				std::cout << "Select the number of products you want to buy:  ";
 				int quantityProducts = this->GetCountProducts(chooseCategory - 1);
 				int numbProd = SecurityInput::inputAnyInteger(quantityProducts);

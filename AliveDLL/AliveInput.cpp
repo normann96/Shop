@@ -55,10 +55,10 @@ void AliveInput::EditDataOfProduct(Product * product)
 void AliveInput::BuyExistProd( Product * product, unsigned int quanity, double & pBalance )
 {
 	Alive * pAlive = (Alive*)product;
-	if (pBalance >= pAlive->m_quantity_product * pAlive->m_price_product)
+	if (pBalance >= (quanity * pAlive->m_price_product))
 	{
 		pAlive->m_quantity_product += quanity;
-		pBalance -= (pAlive->m_price_product * pAlive->m_quantity_product);
+		pBalance -= (pAlive->m_price_product * quanity);
 
 	}
 	else if (pBalance/pAlive->m_price_product > 0)
@@ -66,15 +66,18 @@ void AliveInput::BuyExistProd( Product * product, unsigned int quanity, double &
 		int num = pBalance/pAlive->m_price_product;
 		std::cout << "Do you buy " << num << " " 
 			<< pAlive->m_name_product << "?\n1. - Yes\n2. = No\n";
+//		int choise = 0;
+//		std::cin >> choise;
+//		choise = SecurityInput::inputAnyInteger(2);
 		switch(SecurityInput::inputAnyInteger(2))
 		{
-		case 1:
-			{
-				pAlive->m_quantity_product += num;
-				pBalance -= (pAlive->m_price_product * num);
-			}
-		case 2: break;
-		default: break;
+			case 1:
+				{
+					pAlive->m_quantity_product += num;
+					pBalance -= (pAlive->m_price_product * num);
+				}
+			case 2: break;
+			default: break;
 		}
 	}
 	else
@@ -135,11 +138,8 @@ void AliveInput::BuyNewProd( Product * product, double & pBalance )
 	std::cin >> temp;
 	pAlive->m_price_product = temp;/*SecurityInput::inputFloat();*/
 
-
 	if (pBalance >= pAlive->m_quantity_product * pAlive->m_price_product)
-	{
 		pBalance -= (pAlive->m_price_product * pAlive->m_quantity_product);
-	}
 	else if (pBalance/pAlive->m_price_product > 0)
 	{
 		int num = pBalance/pAlive->m_price_product;

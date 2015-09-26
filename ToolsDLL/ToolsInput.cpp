@@ -55,10 +55,10 @@ void ToolsInput::EditDataOfProduct(Product * product)
 void ToolsInput::BuyExistProd( Product * product, unsigned int quanity, double & pBalance )
 {
 	Tools * pTools = (Tools*)product;
-	if (pBalance >= pTools->m_quantity_product * pTools->m_price_product)
+	if (pBalance >= quanity * pTools->m_price_product)
 	{
 		pTools->m_quantity_product += quanity;
-		pBalance -= (pTools->m_price_product * pTools->m_quantity_product);
+		pBalance -= (pTools->m_price_product * quanity);
 
 	}
 	else if (pBalance/pTools->m_price_product > 0)
