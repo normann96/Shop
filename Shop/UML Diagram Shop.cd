@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Alive">
+    <Position X="5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAEAQAAAAQAAAAAAAgAAAA=</HashCode>
+      <FileName>Alive.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AliveFactory" Collapsed="true">
+    <Position X="14" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QCYAAAAQAAgAAABAAAAAAAAAAABAAAAAAAAKAAAAAAA=</HashCode>
+      <FileName>AliveFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AliveLoad">
+    <Position X="17.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAIAA=</HashCode>
+      <FileName>AliveLoad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AliveOutput">
+    <Position X="9.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>AliveOutput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AliveSave">
+    <Position X="12.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAICAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AliveSave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Balance">
+    <Position X="7.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAgAMAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Balance.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseFactory">
+    <Position X="15.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAABAAKAAAAAAA=</HashCode>
+      <FileName>D:\Shop v1.6.2\Library\BaseFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseInput">
+    <Position X="3.75" Y="6.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>D:\Shop v1.6.2\Library\BaseInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseLoad">
+    <Position X="18.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAIAAAA=</HashCode>
+      <FileName>D:\Shop v1.6.2\Library\BaseLoad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseOutput">
+    <Position X="8.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAEAAIAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>D:\Shop v1.6.2\Library\BaseOutput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseSave">
+    <Position X="13.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>D:\Shop v1.6.2\Library\BaseSave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BaseText" Collapsed="true">
+    <Position X="5.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAEABBAA=</HashCode>
+      <FileName>BaseText.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Category">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>FEAAAgAAAAAAAAAAAAAIAAAAAAQEAAQAAggACAAACAA=</HashCode>
+      <FileName>Category.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Product" Collapsed="true">
+    <Position X="6.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACACAAAEAAAAAAABAAABAAAAAAIAAAAAAAAAQQAAAAA=</HashCode>
+      <FileName>D:\Shop v1.6.2\Library\Product.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shop" Collapsed="true">
+    <Position X="9" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAIAABIAAQAAEAAAABCACCEAAAAAAIAIAAIAAI=</HashCode>
+      <FileName>Shop.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tools">
+    <Position X="8" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Tools.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToolsFactory" Collapsed="true">
+    <Position X="17.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAQAAAAAAAAAAAAAAAAAQAAABAAAAAAAAOAAAAAIE=</HashCode>
+      <FileName>ToolsFactory.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToolsInput">
+    <Position X="4.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAABAAAAAAAAAAAAAAIAAgAAAAAAA=</HashCode>
+      <FileName>ToolsInput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToolsLoad">
+    <Position X="19.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>ToolsLoad.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToolsOutput">
+    <Position X="7" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAABA=</HashCode>
+      <FileName>ToolsOutput.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ToolsSave">
+    <Position X="14.75" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
+      <FileName>ToolsSave.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

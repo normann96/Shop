@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Library">
+      <UniqueIdentifier>{4880b9b4-897f-4a72-b7a2-2af8a69f1e08}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveDLL.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveInput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveOutput.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveSave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AliveLoad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\BaseFactory.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\BaseInput.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\BaseLoad.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\BaseOutput.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\BaseSave.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\SecurityInput.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Library\Product.h">
+      <Filter>Library</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskAlive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveDLL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveInput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveSave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveLoad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AliveOutput.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\BaseFactory.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\BaseInput.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\BaseLoad.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\BaseOutput.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\BaseSave.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\SecurityInput.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Library\Product.cpp">
+      <Filter>Library</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
