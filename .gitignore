@@ -1,0 +1,25 @@
+
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+*.opensdf
+*.ipch
+*.tlog
+*.pdb
+*.idb
+*.obj
+*.exe
+*.manifest
+*.log
+*.cache
+*.ilk
+*.sdf
+*.lastbuildstate
+*.res
+*.rc
+*.suo
+*.database
+*.tmp
+*.unsuccessfulbuild
+/Debug/
+/Release/
