@@ -172,9 +172,10 @@ int SecurityInput::inputAnyInteger()
 
 int SecurityInput::inputAnyInteger( int max )
 {
+	std::cin.sync();
 	char numberCharAr[11];
 	int a = 5;
-	int iCurIndex = 0;
+	unsigned int iCurIndex = 0;
 
 	char b = '9';
 	if (max < b)
@@ -199,7 +200,7 @@ int SecurityInput::inputAnyInteger( int max )
 				--iCurIndex;
 			}
 		}
-		if (a == 8)
+		if (a == 8 && iCurIndex)
 		{
 			numberCharAr[--iCurIndex] = 0;
 			std::cout << '\b' << ' ' << '\b';
@@ -216,6 +217,62 @@ int SecurityInput::inputAnyInteger( int max )
 
 	std::cout << std::endl;
 	return atoi(numberCharAr);
+}
+
+double SecurityInput::InputAnyDouble()
+{
+	char numberCharAr[21];
+	int a = 5;
+	unsigned int iCurIndex = 0;
+	int dot = 0;
+	bool flagDot = true;
+	while(true)
+	{
+		a = _getch();														// press any key
+
+		if (a == '.' && flagDot && iCurIndex < 20)
+		{
+			dot = iCurIndex;
+			flagDot = false;
+			numberCharAr[iCurIndex++] = a;	
+			numberCharAr[iCurIndex] = 0;
+			std::cout << (char)a;
+		}
+		
+		if ((a >= '0' && a <= '9') && iCurIndex < 20)
+		{
+			numberCharAr[iCurIndex++] = a;									// double  max = 1.79769e+308
+
+			if (atof(numberCharAr) <= 1.79769e+308)
+			{
+				numberCharAr[iCurIndex] = 0;
+				std::cout << (char)a;
+			}
+			else
+			{
+				numberCharAr[iCurIndex-1] = 0;
+				--iCurIndex;
+			}
+		}
+		if (a == 8 && iCurIndex)
+		{
+			numberCharAr[--iCurIndex] = 0;
+			if (iCurIndex == dot)
+				flagDot = true;
+			std::cout << '\b' << ' ' << '\b';
+		}
+		else if (a == 13 && iCurIndex > 0)		// 13 - enter
+			break;
+		if (a == 27)
+		{
+			std::cout << "Exit...\n";
+			Sleep(1000);
+			exit(1);
+		}
+	}
+
+	std::cout << std::endl;
+	return atof(numberCharAr);
 }
 
 float SecurityInput::inputFloat()
@@ -277,3 +334,5 @@ std::string SecurityInput::inputAnyString()
 	std::cout << std::endl;
 	return cSimbol;
 }
+
+

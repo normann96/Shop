@@ -12,6 +12,7 @@ public:
 	static int inputOneInteger(char num);
 	static int inputAnyInteger();
 	static int inputAnyInteger(int max);
+	static double InputAnyDouble();
 	static float inputFloat();
 	static bool inputBool();
 	static std::string inputString();
