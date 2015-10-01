@@ -3,12 +3,9 @@
 
 //#include "AliveDLL.h"
 
-AliveLoad::AliveLoad() : m_pAI(nullptr)
+AliveLoad::AliveLoad() : m_pAI(nullptr), m_pAl(nullptr)
 {
 	m_pAI = new AliveInput;
-
-	if (!(m_pAI->m_ppAliveArray))
-		m_pAI->m_ppAliveArray = new Alive*[NUMBER_ALIVE];
 
 #ifdef test_cout_aliveLoad
 	std::cout << "I'm Constructor by AliveLoad\t  " << this << std::endl;
@@ -20,6 +17,10 @@ AliveLoad::~AliveLoad()
 	if (m_pAI)
 		delete m_pAI;
 
+	if (m_pAl)
+		delete [] m_pAl;
+
+
 #ifdef test_cout_aliveLoad
 	std::cout << "I'm Destructor  by AliveLoad\t  " << this << std::endl;
 #endif
@@ -27,39 +28,45 @@ AliveLoad::~AliveLoad()
 
 void AliveLoad::Load( std::vector<Product*> & produts )
 {
-// 	con_color(11);
-// 	std::cout << "Enter filename that you want load \"Alive\":\n";
-// 	char nameFile[80];
-// 	con_color(15);
-// 	std::cin >> nameFile;
-	std::ifstream fin(ALIVEDATABASE, std::ios::in);
-
-	if (!fin.is_open())
-		std::cout << "Error opening file!\n";
-	else
+	try
 	{
-		produts.clear();
-		int i = 0;
-		while (!fin.eof())
+		std::ifstream fin(ALIVEDATABASE, std::ios::in );
+		fin.exceptions(std::ifstream::failbit);
+		if (!fin.is_open())
+			std::cout << "Error opening file load alive!\n";
+		else
 		{
-			if (m_pAI->m_numberAlive < NUMBER_ALIVE )
-			{
-				m_pAI->m_ppAliveArray[m_pAI->m_numberAlive++] = new Alive;
-				produts.push_back(m_pAI->m_ppAliveArray[m_pAI->m_numberAlive-1]);
+			fin.seekg (0, fin.end);
+			int length = (int)fin.tellg();
+			fin.seekg (0, fin.beg);
 
-				fin >> dynamic_cast<Alive*>(produts[i])->m_name_product;
-				fin >> dynamic_cast<Alive*>(produts[i])->m_quantity_product;
-				fin >> dynamic_cast<Alive*>(produts[i])->m_price_product;
-				fin >> dynamic_cast<Alive*>(produts[i])->m_color;
-				fin >> dynamic_cast<Alive*>(produts[i])->m_lifetime_day;
-				i++;
+			produts.clear();
+			int i = 0;
+			if (length)
+			{
+				m_pAl = new Alive[NUMBER_ALIVE];
+				while (!fin.eof())
+				{
+					if (i < NUMBER_ALIVE )
+					{
+						produts.push_back(&m_pAl[i]);
+						fin >> dynamic_cast<Alive*>(produts[i])->m_name_product;
+						fin >> dynamic_cast<Alive*>(produts[i])->m_quantity_product;
+						fin >> dynamic_cast<Alive*>(produts[i])->m_price_product;
+						fin >> dynamic_cast<Alive*>(produts[i])->m_color;
+						fin >> dynamic_cast<Alive*>(produts[i])->m_lifetime_day;
+						i++;
+					}
+					else
+						break;
+				}
 			}
-			else
-				break;
 		}
 		fin.close();
-// 		con_color(11);
-// 		std::cout << "Your successfully load " << produts.size() << " alive\n";
-//		con_color(15);
+	}
+	catch(std::ios_base::failure &fail)
+	{
+		std::cout << "Exception opening/reading file: " << fail.what() << std::endl;
+		_getch();
 	}
 }

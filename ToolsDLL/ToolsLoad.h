@@ -12,6 +12,7 @@ public:
 protected:
 private:
 	ToolsInput * m_pTI;
+	Tools * m_pT;
 };
 
 #endif // ToolsLoad_h__

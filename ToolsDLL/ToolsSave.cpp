@@ -19,30 +19,28 @@ ToolsSave::~ToolsSave()
 
 void ToolsSave::Save( std::vector<Product*> & produts )
 {
-// 	con_color(11);
-// 	std::cout << "Enter filename that you want save \"Tools\":\n";
-// 	con_color(15);
-// 	char nameFile[80];
-// 	std::cin >> nameFile;
-	std::ofstream fout(TOOLSDATABASE, std::ios_base::out | std::ios_base::trunc);
-
-	if (!fout.is_open())
-		std::cout << "Error opening file!\n";
-	else
+	try
 	{
-		for (unsigned int i = 0; i < produts.size(); i++)
+		std::ofstream fout(TOOLSDATABASE, std::ios_base::out | std::ios_base::trunc);
+		fout.exceptions(std::ofstream::failbit);
+		if(produts.size() && fout.is_open())
 		{
-			fout << dynamic_cast<Tools*>(produts[i])->m_name_product << " ";
-			fout << dynamic_cast<Tools*>(produts[i])->m_quantity_product << " ";
-			fout << dynamic_cast<Tools*>(produts[i])->m_price_product << " ";
-			fout << dynamic_cast<Tools*>(produts[i])->m_type << " ";
-			fout << dynamic_cast<Tools*>(produts[i])->m_weight;
-			if (i != produts.size()-1)
-				fout << '\n';
+			for (unsigned int i = 0; i < produts.size(); i++)
+			{
+				fout << dynamic_cast<Tools*>(produts[i])->m_name_product << " ";
+				fout << dynamic_cast<Tools*>(produts[i])->m_quantity_product << " ";
+				fout << dynamic_cast<Tools*>(produts[i])->m_price_product << " ";
+				fout << dynamic_cast<Tools*>(produts[i])->m_type << " ";
+				fout << dynamic_cast<Tools*>(produts[i])->m_weight;
+				if (i != produts.size()-1)
+					fout << '\n';
+			}
+			std::cout << "Tools saved successfully!\n";
 		}
 		fout.close();
-// 		con_color(11);
-// 		std::cout << "Your successfully saved " << produts.size() << " tools\n";
-//		con_color(15);
+	}
+	catch(std::ios_base::failure &fail)
+	{
+		std::cout << "Exception opening/reading file: " << fail.what() << std::endl;
 	}
 }

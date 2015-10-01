@@ -11,11 +11,11 @@ ToolsInput::ToolsInput() : BaseInput(), m_ppToolsArray(nullptr), m_numberTools(0
 
 ToolsInput::~ToolsInput()
 {
-	if (m_ppToolsArray != NULL)
+	if (m_ppToolsArray)
 	{
 		for (int i = 0; i < m_numberTools; i++)
 			delete m_ppToolsArray[i];
-		delete [] m_ppToolsArray;
+		delete m_ppToolsArray;
 	}
 
 #ifdef test_cout_toolsinput
@@ -25,13 +25,29 @@ ToolsInput::~ToolsInput()
 
 Product * ToolsInput::CreateProduct()
 {
-	if(!m_ppToolsArray)
-		m_ppToolsArray = new Tools *[NUMBER_TOOLS];
-
-	if (m_numberTools < NUMBER_TOOLS )
+	try
 	{
-		m_ppToolsArray[m_numberTools++] = new Tools;
-		return m_ppToolsArray[m_numberTools-1];
+		if(!m_ppToolsArray)
+			m_ppToolsArray = new Tools *[NUMBER_TOOLS];
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
+
+	try
+	{
+		if (m_numberTools < NUMBER_TOOLS )
+		{
+			m_ppToolsArray[m_numberTools++] = new Tools;
+			return m_ppToolsArray[m_numberTools-1];
+		}
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
 	}
 
 	return nullptr;
@@ -42,10 +58,10 @@ void ToolsInput::EditDataOfProduct(Product * product)
 	Tools * pTools = (Tools*)product;
 	std::cout << "Enter name of Tools: ";
 	pTools->m_name_product = SecurityInput::inputAnyString();
-	std::cout << "Enter countity of Tools: ";
+	std::cout << "Enter quantity of Tools: ";
 	pTools->m_quantity_product = SecurityInput::inputAnyInteger();
 	std::cout << "Enter price of Tools: ";
-	pTools->m_price_product = SecurityInput::inputFloat();
+	pTools->m_price_product = SecurityInput::InputAnyDouble();
 	std::cout << "Enter weight of Tools: ";
 	pTools->m_weight = SecurityInput::inputFloat();
 	std::cout << "Enter type of Tools: ";
@@ -131,10 +147,7 @@ void ToolsInput::BuyNewProd( Product * product, double & pBalance )
 	std::cout << "Enter quantity: ";
 	pTools->m_quantity_product = SecurityInput::inputAnyInteger();
 	std::cout << "Enter price: ";
-	
-	double temp;
-	std::cin >> temp;
-	pTools->m_price_product = temp;/*SecurityInput::inputFloat();*/
+	pTools->m_price_product = SecurityInput::InputAnyDouble();
 
 	if (pBalance >= pTools->m_quantity_product * pTools->m_price_product)
 	{

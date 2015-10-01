@@ -11,7 +11,7 @@ AliveInput::AliveInput() : BaseInput(), m_ppAliveArray(nullptr), m_numberAlive(0
 
 AliveInput::~AliveInput()
 {
-	if (m_ppAliveArray != NULL)
+	if (m_ppAliveArray)
 	{
 		for (int i = 0; i < m_numberAlive; i++)
 			delete m_ppAliveArray[i];
@@ -25,13 +25,29 @@ AliveInput::~AliveInput()
 
 Product * AliveInput::CreateProduct()
 {
-	if (!m_ppAliveArray)
-		m_ppAliveArray = new Alive*[NUMBER_ALIVE];
-	
-	if (m_numberAlive < NUMBER_ALIVE )
+	try
 	{
-		m_ppAliveArray[m_numberAlive++] = new Alive;
-		return m_ppAliveArray[m_numberAlive-1];
+		if (!m_ppAliveArray)
+			m_ppAliveArray = new Alive*[NUMBER_ALIVE];
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw;
+	}
+	
+	try
+	{
+		if (m_numberAlive < NUMBER_ALIVE )
+		{
+			m_ppAliveArray[m_numberAlive++] = new Alive;
+			return m_ppAliveArray[m_numberAlive-1];
+		}
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
 	}
 
 	return nullptr;
@@ -42,10 +58,10 @@ void AliveInput::EditDataOfProduct(Product * product)
 	Alive * pAlive = (Alive*)product;
 	std::cout << "Enter name of Alive: ";
 	pAlive->m_name_product = SecurityInput::inputAnyString();
-	std::cout << "Enter countity of Alive: ";
+	std::cout << "Enter quantity of Alive: ";
 	pAlive->m_quantity_product = SecurityInput::inputAnyInteger();
 	std::cout << "Enter price of Alive: ";
-	pAlive->m_price_product = SecurityInput::inputFloat();
+	pAlive->m_price_product = SecurityInput::InputAnyDouble();
 	std::cout << "Enter color of Alive: ";
 	pAlive->m_color = SecurityInput::inputAnyString();
 	std::cout << "Enter lifetime day of Alive: ";
@@ -64,11 +80,9 @@ void AliveInput::BuyExistProd( Product * product, unsigned int quanity, double &
 	else if (pBalance/pAlive->m_price_product > 0)
 	{
 		int num = pBalance/pAlive->m_price_product;
+		std::cin.sync();
 		std::cout << "Do you buy " << num << " " 
 			<< pAlive->m_name_product << "?\n1. - Yes\n2. = No\n";
-//		int choise = 0;
-//		std::cin >> choise;
-//		choise = SecurityInput::inputAnyInteger(2);
 		switch(SecurityInput::inputAnyInteger(2))
 		{
 			case 1:
@@ -134,15 +148,14 @@ void AliveInput::BuyNewProd( Product * product, double & pBalance )
 	std::cout << "Enter quantity: ";
 	pAlive->m_quantity_product = SecurityInput::inputAnyInteger();
 	std::cout << "Enter price: ";
-	double temp;
-	std::cin >> temp;
-	pAlive->m_price_product = temp;/*SecurityInput::inputFloat();*/
+	pAlive->m_price_product = SecurityInput::InputAnyDouble();
 
 	if (pBalance >= pAlive->m_quantity_product * pAlive->m_price_product)
 		pBalance -= (pAlive->m_price_product * pAlive->m_quantity_product);
 	else if (pBalance/pAlive->m_price_product > 0)
 	{
 		int num = pBalance/pAlive->m_price_product;
+		std::cin.sync();
 		std::cout << "Do you buy " << num << " " 
 			<< pAlive->m_name_product << "?\n1. - Yes\n2. = No\n";
 		switch(SecurityInput::inputAnyInteger(2))

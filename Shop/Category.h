@@ -18,7 +18,7 @@ private:
 protected:
 public:
 	Category();
-	virtual ~Category();
+	~Category();
 	
 	BaseFactory *m_pBaseFactory;
 	BaseOutput	*m_pBaseOut;

@@ -17,7 +17,7 @@ Balance::~Balance()
 
 void Balance::ShowBalance()
 {
-	std::cout << "Balance = $" << m_nMoney << std::endl;
+	std::cout << "Balance = $ " << m_nMoney << std::endl;
 }
 
 void Balance::SetBalance( double balance )

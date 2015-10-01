@@ -34,32 +34,64 @@ ToolsFactory::~ToolsFactory()
 
 BaseInput	* ToolsFactory::CreateBaseInput()
 {
-	if (!m_pInputTools)
-		m_pInputTools = new ToolsInput;
+	try
+	{
+		if (!m_pInputTools)
+			m_pInputTools = new ToolsInput;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pInputTools;
 }
 
 BaseOutput * ToolsFactory::CreateBaseOutput()
 {
-	if(!m_pOutputTools)
-		m_pOutputTools = new ToolsOutput;
+	try
+	{
+		if(!m_pOutputTools)
+			m_pOutputTools = new ToolsOutput;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pOutputTools;
 }
 
 BaseSave * ToolsFactory::CreateBaseSave()
 {
-	if (!m_pSaveTools)
-		m_pSaveTools = new ToolsSave;
+	try
+	{
+		if (!m_pSaveTools)
+			m_pSaveTools = new ToolsSave;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pSaveTools;
 }
 
 BaseLoad * ToolsFactory::CreateBaseLoad()
 {
-	if (!m_pLoadTools)
-		m_pLoadTools = new ToolsLoad;
+	try
+	{
+		if (!m_pLoadTools)
+			m_pLoadTools = new ToolsLoad;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pLoadTools;
 }

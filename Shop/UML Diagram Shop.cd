@@ -38,7 +38,7 @@
   <Class Name="Balance">
     <Position X="7.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAAAAAAAAAAAAgAMAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAACCAAAAAAAAAAAAgAMAAAAAAAAAIAAAAAAAAAAAA=</HashCode>
       <FileName>Balance.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -46,62 +46,62 @@
     <Position X="15.5" Y="1.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>QAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAABAAKAAAAAAA=</HashCode>
-      <FileName>D:\Shop v1.6.2\Library\BaseFactory.h</FileName>
+      <FileName>D:\Alex\Shop Final\Library\BaseFactory.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="BaseInput">
+  <Class Name="BaseInput" Collapsed="true">
     <Position X="3.75" Y="6.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
-      <FileName>D:\Shop v1.6.2\Library\BaseInput.h</FileName>
+      <HashCode>IAAAAAEQQACAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAA=</HashCode>
+      <FileName>D:\Alex\Shop Final\Library\BaseInput.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseLoad">
     <Position X="18.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAIAAAA=</HashCode>
-      <FileName>D:\Shop v1.6.2\Library\BaseLoad.h</FileName>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAIAAAA=</HashCode>
+      <FileName>D:\Alex\Shop Final\Library\BaseLoad.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseOutput">
     <Position X="8.25" Y="7" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAEAAIAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
-      <FileName>D:\Shop v1.6.2\Library\BaseOutput.h</FileName>
+      <FileName>D:\Alex\Shop Final\Library\BaseOutput.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseSave">
     <Position X="13.5" Y="7" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAEAAAAAAA=</HashCode>
-      <FileName>D:\Shop v1.6.2\Library\BaseSave.h</FileName>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAgAAAAAAAAAAAEAAAAAAA=</HashCode>
+      <FileName>D:\Alex\Shop Final\Library\BaseSave.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BaseText" Collapsed="true">
     <Position X="5.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAEABBAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEABBAA=</HashCode>
       <FileName>BaseText.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Category">
     <Position X="10.75" Y="2.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>FEAAAgAAAAAAAAAAAAAIAAAAAAQEAAQAAggACAAACAA=</HashCode>
+      <HashCode>FEAAAAAAAAAAAAAAAAAIAAAAAAQAAAQAAggAAAAACAA=</HashCode>
       <FileName>Category.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Product" Collapsed="true">
     <Position X="6.25" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACACAAAEAAAAAAABAAABAAAAAAIAAAAAAAAAQQAAAAA=</HashCode>
-      <FileName>D:\Shop v1.6.2\Library\Product.h</FileName>
+      <HashCode>ACACAAAAAAACAAABEAABEAAAAAIAAAAAAAAAQQAABAA=</HashCode>
+      <FileName>D:\Alex\Shop Final\Library\Product.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Shop" Collapsed="true">
     <Position X="9" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAACAAIAABIAAQAAEAAAABCACCEAAAAAAIAIAAIAAI=</HashCode>
+      <HashCode>AAIAiOAIAABIAiQAQEBAIEhCACCMAAICJAIEIAAJAAI=</HashCode>
       <FileName>Shop.h</FileName>
     </TypeIdentifier>
   </Class>

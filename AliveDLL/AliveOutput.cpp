@@ -20,7 +20,7 @@ AliveOutput::~AliveOutput()
 
 void AliveOutput::ShowProduct( Product * product )
 {
-	std::cout << (char)186 << std::right << std::setw(8) << "Name: " << std::setw(14) << "Countity: "\
+	std::cout << (char)186 << std::right << std::setw(8) << "Name: " << std::setw(14) << "Quantity: "\
 		<< std::setw(12) << "Price: " << std::setw(11) << "Color: " << \
 		std::setw(18) << "Lifetime day: " << std::setw(4) << (char)186 << std::endl;
 
@@ -73,8 +73,6 @@ void AliveOutput::ShowAllProducts( std::vector<Product*> &productsArray )
 	}
 	std::cout << (char)185 << std::endl;
 
-
-//	Alive *pAlive = dynamic_cast<Alive*>(productsArray[0]);
 	for (unsigned int i = 0; i < productsArray.size(); i++)
 	{
 		std::cout << (char)186; 

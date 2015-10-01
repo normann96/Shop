@@ -35,32 +35,64 @@ AliveFactory::~AliveFactory()
 
 BaseInput * AliveFactory::CreateBaseInput()
 {
-	if (!m_pInputAlive)
-		m_pInputAlive = new AliveInput;
+	try
+	{
+		if (!m_pInputAlive)
+			m_pInputAlive = new AliveInput;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pInputAlive;
 }
 
 BaseOutput * AliveFactory::CreateBaseOutput()
 {
-	if (!m_pOutputAlive)
-		m_pOutputAlive = new AliveOutput;
+	try
+	{
+		if (!m_pOutputAlive)
+			m_pOutputAlive = new AliveOutput;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pOutputAlive;
 }
 
 BaseSave * AliveFactory::CreateBaseSave()
 {
-	if (!m_pSaveAlive)
-		m_pSaveAlive = new AliveSave;
+	try
+	{
+		if (!m_pSaveAlive)
+			m_pSaveAlive = new AliveSave;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pSaveAlive;
 }
 
 BaseLoad * AliveFactory::CreateBaseLoad()
 {
-	if (!m_pLoadAlive)
-		m_pLoadAlive = new AliveLoad;
+	try
+	{
+		if (!m_pLoadAlive)
+			m_pLoadAlive = new AliveLoad;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
 	return m_pLoadAlive;
 }

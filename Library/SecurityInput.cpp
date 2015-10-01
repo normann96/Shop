@@ -4,7 +4,6 @@
 #include <iostream>
 #include <string>
 
-#include "boost/smart_ptr.hpp"
 
 static const unsigned int size = 64;
 static char buffer[size];

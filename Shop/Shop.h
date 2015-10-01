@@ -53,7 +53,6 @@ public:
 	Shop();
 	~Shop();
 
-
 	void ShowBalance(); 
 	void SetBalance();
 

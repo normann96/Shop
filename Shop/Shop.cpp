@@ -6,18 +6,34 @@
 
 Shop::Shop() : m_nCountLibrary(0), m_pHmod(nullptr), m_pPathNameDLL(NULL), m_pCategory(nullptr), m_pBaseTxt(nullptr), m_pBalance(nullptr)
 {
-	if(this->Run())					 //	ищем DLL, если находим - открывает, инчае выход
+	if(this->Run())														 //	ищем DLL, если находим - открывает, инчае выход
 		this->OpenDLL();
 	else
 		exit(1);
 
- 	m_pBaseTxt = new ConsoleText;
- 	
-	m_pBalance = new Balance;
-	this->LoadBalance();
+	try
+	{
+		m_pBaseTxt = new ConsoleText;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw;
+	}
+	try
+	{
+		m_pBalance = new Balance;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 
+	this->LoadBalance();
 	for (unsigned int i = 0; i < m_nCountLibrary; i++)
 		this->Load(i);
+
 
 #ifdef test_cout_shop
 	std::cout << "I'm Constructor by Shop\t\t  " << this << std::endl;
@@ -26,12 +42,9 @@ Shop::Shop() : m_nCountLibrary(0), m_pHmod(nullptr), m_pPathNameDLL(NULL), m_pCa
 
 Shop::~Shop()
 {
-	this->SaveBalance();
- 	for (unsigned int i = 0; i < m_nCountLibrary; i++)
- 		this->Save(i);
-
-	if (m_pHmod)
-		delete [] m_pHmod;
+ 	this->SaveBalance();
+	for (unsigned int i = 0; i < m_nCountLibrary; i++)
+		this->Save(i);
 
 	if(m_pBaseTxt)
 		delete m_pBaseTxt;
@@ -42,8 +55,12 @@ Shop::~Shop()
 	if(m_pCategory)
 		delete [] m_pCategory;
 
-	for (unsigned int i = 0; i < m_nCountLibrary; i++)
-		FreeLibrary(m_pHmod[i]);
+	if (m_pHmod)
+	{
+		for (unsigned int i = 0; i < m_nCountLibrary; i++)
+			FreeLibrary(m_pHmod[i]);
+		delete m_pHmod;
+	}
 
 #ifdef test_cout_shop
 	std::cout << "I'm Destructor  by Shop\t\t  " << this << std::endl;
@@ -107,47 +124,87 @@ bool Shop::Run()																					// находим DLL и сохраняем путь в вектор m_
 
 void Shop::OpenDLL()																								// отркываем найденые DLL
 {
-	m_pHmod = new HMODULE[m_nCountLibrary];
+	try
+	{
+		m_pHmod = new HMODULE[m_nCountLibrary];
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cerr << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
+
 	for (unsigned int i = 0; i < m_pPathNameDLL.size(); i++)
 	{
-		m_pHmod[i] = LoadLibrary(m_pPathNameDLL[i].c_str());
-		if (m_pHmod[i] == NULL)
+		try
+		{
+			m_pHmod[i] = LoadLibrary(m_pPathNameDLL[i].c_str());
+			if (!m_pHmod[i]) throw 1;
+		}
+		catch(int a)
 		{
 			std::cout << "DLL not loaded!\n";
 			Sleep(2000);
 			return;
 		}
-// 		else
-// 		{
-// 			con_color(11);
-// 			std::cout << "DLL Loaded:  ";
-// 			con_color(14);
-// 			std::cout << m_pPathNameDLL[i].c_str() << std::endl;
-// 			con_color(15);
-// 		}
-//		Sleep(2000);
+		//	else
+		//	{
+		//		con_color(11);
+		//		std::cout << "DLL Loaded:  ";
+		//		con_color(14);
+		//		std::cout << m_pPathNameDLL[i].c_str() << std::endl;
+		//		con_color(15);
+		//		Sleep(2000);
+		//		system("cls");
+		//	}
 	}
-
-//	system("cls");
-//--------------------------------------------------------------------------
+	//--------------------------------------------------------------------------
 
 	typedef const char * (*sNameFactory)();
 	typedef BaseFactory * (*GetFactoryT)();
 
-	m_pCategory = new Category[m_nCountLibrary];						// создаем количество категорий по количеству DLL											
+	try
+	{
+		m_pCategory = new Category[m_nCountLibrary];																// создаем количество категорий по количеству DLL	
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cout << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}	
+
 	for (unsigned int i = 0; i < m_nCountLibrary; i++)
 	{
-		GetFactoryT pFn = (GetFactoryT)GetProcAddress(m_pHmod[i], "GetFactory");
-		sNameFactory name = (sNameFactory)GetProcAddress(m_pHmod[i], "GetNameDLL");
-		if (pFn == NULL)
+		try
 		{
-			std::cout << "GetFactory not found!\n";
-			FreeLibrary(m_pHmod[i]);
-			_getch();
-			return;
+			GetFactoryT pFn = (GetFactoryT)GetProcAddress(m_pHmod[i], "GetFactory");
+			sNameFactory name = (sNameFactory)GetProcAddress(m_pHmod[i], "GetNameDLL");
+			if (!pFn ) throw 1;
+			if (!name ) throw 2;
+
+			m_pCategory[i].m_pBaseFactory = pFn();
+			m_pPathNameDLL[i] = name();																				// сохраняем название продукта в m_pPathNameDLL
 		}
-		m_pCategory[i].m_pBaseFactory = pFn();
-		m_pPathNameDLL[i] = name();										// сохраняем название продукта в m_pPathNameDLL
+		catch(int nError)
+		{
+			switch(nError)
+			{
+			case 1:
+				{
+					std::cout << "GetFactory not found!\n";
+					FreeLibrary(m_pHmod[i]);
+					return;
+					break;
+				}
+			case 2:
+				{
+					std::cout << "GetNameDLL not found!\n";
+					FreeLibrary(m_pHmod[i]);
+					return;
+					break;
+				}
+			}
+		}
 	}
 }
 
@@ -214,9 +271,7 @@ void Shop::SetBalance()
 	if(sPass == PASSWORD)
 	{
 		std::cout << "Enter new balance!\n";
-		double balance;
-		std::cin >> balance;
-		this->SetBalance(balance);
+		this->SetBalance(SecurityInput::InputAnyDouble());
 	}
 	else
 	{
@@ -241,18 +296,26 @@ void Shop::DeleteProduct( unsigned int numCategory, unsigned int numProduct )
 
 void Shop::CreateNewProduct(unsigned int numCategory)
 {
-	if (numCategory < m_nCountLibrary)
+	try
 	{
-		m_pCategory[numCategory].m_pBaseInput = m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput();
-		Product *pNewProduct = m_pCategory[numCategory].m_pBaseInput->CreateProduct();
-//		Product *pNewProduct = m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput()->CreateProduct();
-		if (pNewProduct)
-			m_pCategory[numCategory].m_pvProdCat.push_back(pNewProduct);
+		if (numCategory < m_nCountLibrary)
+		{
+			//		m_pCategory[numCategory].m_pBaseInput = m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput();
+			//		Product *pNewProduct = m_pCategory[numCategory].m_pBaseInput->CreateProduct();
+			Product *pNewProduct = m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput()->CreateProduct();
+			if (pNewProduct)
+				m_pCategory[numCategory].m_pvProdCat.push_back(pNewProduct);
+			else
+				std::cout << "Array " << m_pPathNameDLL[numCategory] << " is fully!\n";
+		}
 		else
-			std::cout << "Array " << m_pPathNameDLL[numCategory] << " is fully!\n";
+			std::cout << "Category " << numCategory << " is absent.\n";
 	}
-	else
-		std::cout << "Category " << numCategory << " is absent.\n";
+	catch(std::bad_alloc& ba)
+	{
+		std::cout << "bad_alloc caught: " << ba.what() << '\n';
+		throw ba;
+	}
 }
 
 void Shop::EditProduct(unsigned int numCategory, unsigned int numProduct)
@@ -277,26 +340,34 @@ void Shop::SellProduct( unsigned int numCategory, unsigned int numProduct, unsig
 
 void Shop::BuyNewProduct( unsigned int numCategory )
 {
-	if (numCategory < m_nCountLibrary)
+	try
 	{
-		Product *pNewProduct = m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput()->CreateProduct();
-		if (pNewProduct)
+		if (numCategory < m_nCountLibrary)
 		{
-			m_pCategory[numCategory].m_pvProdCat.push_back(pNewProduct);
-			std::cout << "Create new product " << m_pCategory[numCategory].m_pvProdCat.size() << ": " << m_pPathNameDLL[numCategory] << std::endl;
-
-			if (numCategory < m_nCountLibrary && m_pBalance)
+			Product *pNewProduct = m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput()->CreateProduct();
+			if (pNewProduct)
 			{
-				double pBal = m_pBalance->GetBalance();
-				m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput()->BuyNewProd(pNewProduct, pBal);
-				m_pBalance->SetBalance(pBal);
+				m_pCategory[numCategory].m_pvProdCat.push_back(pNewProduct);
+				std::cout << "Create new product " << m_pCategory[numCategory].m_pvProdCat.size() << ": " << m_pPathNameDLL[numCategory] << std::endl;
+
+				if (numCategory < m_nCountLibrary && m_pBalance)
+				{
+					double pBal = m_pBalance->GetBalance();
+					m_pCategory[numCategory].m_pBaseFactory->CreateBaseInput()->BuyNewProd(pNewProduct, pBal);
+					m_pBalance->SetBalance(pBal);
+				}
 			}
+			else
+				std::cout << "Array " << m_pPathNameDLL[numCategory] << " is fully!\n";
 		}
 		else
-			std::cout << "Array " << m_pPathNameDLL[numCategory] << " is fully!\n";
+			std::cout << "This category is not exist!\n";
 	}
-	else
-		std::cout << "This category is not exist!\n";
+	catch(std::bad_alloc& ba)
+	{
+	 	std::cout << "bad_alloc caught: " << ba.what() << '\n';
+	 	throw ba;
+	}
 }
 
 void Shop::BuyExistProduct( unsigned int numCategory, unsigned int numProduct, unsigned int quantityProd )
@@ -322,55 +393,65 @@ void Shop::Save( unsigned int numCategory )
 void Shop::Load( unsigned int numCategory )
 {
 	if (numCategory < m_nCountLibrary)
-		m_pCategory[numCategory].m_pBaseFactory->CreateBaseLoad()->Load((m_pCategory[numCategory].m_pvProdCat));
+	{
+		try
+		{
+			m_pCategory[numCategory].m_pBaseLoad = m_pCategory[numCategory].m_pBaseFactory->CreateBaseLoad();
+			if (!m_pCategory[numCategory].m_pBaseLoad) throw 1;
+			m_pCategory[numCategory].m_pBaseLoad->Load((m_pCategory[numCategory].m_pvProdCat));
+	//		m_pCategory[numCategory].m_pBaseFactory->CreateBaseLoad()->Load((m_pCategory[numCategory].m_pvProdCat));
+		}
+		catch (int a)
+		{
+			std::cout << "Base not created!\n";
+		}
+
+	}
 	else
 		std::cout << "This category is not exist!\n";
 }
 
 void Shop::SaveBalance()
 {
-// 	con_color(11);
-// 	std::cout << "Enter filename that you want save balance:\n";
-// 	con_color(15);
-// 	char nameFile[80];
-// 	std::cin >> nameFile;
-	std::ofstream fout(BALANCE, std::ios_base::out | std::ios_base::trunc);
-	if (!fout.is_open())
-		std::cout << "Error opening file!\n";
-	else
+	try
 	{
-		fout << m_pBalance->GetBalance();
+		std::ofstream fout(BALANCE, std::ios_base::out | std::ios_base::trunc);
+		fout.exceptions(std::ofstream::failbit);
+		if (fout.is_open())
+		{
+			fout << m_pBalance->GetBalance();
+			con_color(15);
+		}
 		fout.close();
-// 		con_color(11);
-// 		std::cout << "Your successfully saved balance!\n";
-		con_color(15);
+	}
+	catch(std::ios_base::failure &fail)
+	{
+		std::cout << "Exception opening/writing file: " << fail.what() << std::endl;
 	}
 }
 
 void Shop::LoadBalance()
 {
-// 	con_color(11);
-// 	std::cout << "\nEnter filename that you want load balance:\n";
-// 	char nameFile[80];
-// 	con_color(15);
-// 	std::cin >> nameFile;
-	std::ifstream fin(BALANCE, std::ios::in);
-	if (!fin.is_open())
-		std::cout << "Error opening file!\n";
-	else
+	try
 	{
-		double balance;
-		while (!fin.eof())
+		std::ifstream fin(BALANCE, std::ios::in);
+		fin.exceptions(std::ifstream::failbit);
+		if (fin.is_open())
 		{
-			fin >> balance;
-			m_pBalance->SetBalance(balance);
+			double balance;
+			while (!fin.eof())
+			{
+				fin >> balance;
+				m_pBalance->SetBalance(balance);
+			}
+			con_color(15);
 		}
 		fin.close();
-//		con_color(11);
-//		std::cout << "Your successfully load $ " << balance << "\n";
-		con_color(15);
 	}
-
+	catch(std::ios_base::failure &fail)
+	{
+		std::cout << "Exception opening/reading file: " << fail.what() << std::endl;
+	}
 }
 
 void Shop::Menu()
@@ -384,6 +465,7 @@ void Shop::Sell()
 	std::cout << "0. - Back.\n";
 	this->ShowCategory();
 	int nCountCat = this->GetNumberCategory();
+	std::cin.sync();
 	int chooseCategory = SecurityInput::inputAnyInteger(nCountCat);
 	system("cls");
 	this->ShowBalance();
@@ -397,7 +479,7 @@ void Shop::Sell()
 		if (numbProd)
 		{
 			std::cout << "Select quantity of products:  ";
-			int countProd = SecurityInput::inputAnyInteger(5000);
+			int countProd = SecurityInput::inputAnyInteger(50000);
 			this->SellProduct(chooseCategory-1, numbProd-1, countProd);
 		}
 	}
@@ -409,6 +491,7 @@ void Shop::Buy()
 	std::cout << "0. - Back.\n";
 	this->ShowCategory();
 	int nCountCat = this->GetNumberCategory();
+	std::cin.sync();
 	int chooseCategory = SecurityInput::inputAnyInteger(nCountCat);
 	system("cls");
 	this->ShowBalance();
@@ -416,11 +499,11 @@ void Shop::Buy()
 	if (chooseCategory)
 	{
 		this->ShowAllProduct(chooseCategory-1);
-
-		std::cout << "Choose menu:\n";
-		std::cout << "1 - Buy a new product\n";
-		std::cout << "2 - Buy an exist product from table\n";
-		std::cout << "0 - Back\n";
+ 
+  		std::cout << "Choose menu:\n";
+  		std::cout << "1 - Buy a new product\n";
+  		std::cout << "2 - Buy an exist product from table\n";
+  		std::cout << "0 - Back\n";
 		switch(SecurityInput::inputAnyInteger(2))
 		{
 		case 1:
@@ -444,7 +527,7 @@ void Shop::Buy()
 				if (numbProd)
 				{
 					std::cout << "Select quantity of product:  ";
-					int countProd = SecurityInput::inputAnyInteger(5000);
+					int countProd = SecurityInput::inputAnyInteger(50000);
 					this->BuyExistProduct(chooseCategory-1, numbProd-1, countProd);
 				}
 				break;
@@ -492,6 +575,7 @@ void Shop::ShowProducts()
 	std::cout << "0. - Back.\n";
 	this->ShowCategory();
 	int nCountCat = this->GetNumberCategory();
+	std::cin.sync();
 	int choose = SecurityInput::inputAnyInteger(nCountCat);
 	system("cls");
 	this->ShowBalance();
@@ -532,8 +616,10 @@ void Shop::ExitAndSave()
 {
 	delete this;
 	std::cout << "Exit from shop! Bye!\n";
-// 	if (_CrtDumpMemoryLeaks())
-// 		std::cout << "Memory Leak!\n";
+	if (_CrtDumpMemoryLeaks())
+		std::cout << "Memory Leak!\n";
+	else
+		std::cout << "Memory ok\n";
 
 	Sleep(700);
 	exit(1);

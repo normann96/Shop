@@ -20,7 +20,7 @@ void ToolsOutput::ShowProduct( Product * product )
 	Tools *pTools = (Tools*)product;
 
 	std::cout << "Name: " << pTools->m_name_product << " " << this << std::endl;
-	std::cout << "Countity: " << pTools->m_quantity_product << std::endl;
+	std::cout << "Quantity: " << pTools->m_quantity_product << std::endl;
 	std::cout << "Price: " << pTools->m_price_product << std::endl;
 	std::cout << "Weight: " << pTools->m_weight << std::endl;
 	std::cout << "Type: " << pTools->m_type << std::endl;
@@ -60,8 +60,6 @@ void ToolsOutput::ShowAllProducts( std::vector<Product*> &productsArray )
 	}
 	std::cout << (char)185 << std::endl;
 
-
-//	Tools *pTools = dynamic_cast<Tools*>(productsArray[0]);
 	for (unsigned int i = 0; i < productsArray.size(); i++)
 	{
 		std::cout << (char)186; 

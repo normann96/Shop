@@ -15,7 +15,6 @@
 #include <iomanip>
 #include <conio.h>
 #include <fstream>
-#include "boost/smart_ptr.hpp"
 #include "TaskTools.h"
 
 #define con_color(a) SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), a)

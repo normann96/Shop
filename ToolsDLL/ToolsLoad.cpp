@@ -1,12 +1,10 @@
 #include "stdafx.h"
 #include "ToolsLoad.h"
 
-ToolsLoad::ToolsLoad() : m_pTI(nullptr)
+ToolsLoad::ToolsLoad() : m_pTI(nullptr), m_pT(nullptr)
 {
 	m_pTI = new ToolsInput;
-
-	if (!(m_pTI->m_ppToolsArray))
-		m_pTI->m_ppToolsArray = new Tools*[NUMBER_TOOLS];
+//	m_pT = new Tools[NUMBER_TOOLS];
 
 #ifdef test_cout_toolsLoad
 	std::cout << "I'm Constructor by ToolsLoad\t  " << this << std::endl;
@@ -15,8 +13,13 @@ ToolsLoad::ToolsLoad() : m_pTI(nullptr)
 
 ToolsLoad::~ToolsLoad()
 {
+
 	if (m_pTI)
 		delete m_pTI;
+
+	if (m_pT)
+		delete [] m_pT;
+
 
 #ifdef test_cout_toolsLoad
 	std::cout << "I'm Destructor by ToolsLoad\t  " << this << std::endl;
@@ -25,40 +28,44 @@ ToolsLoad::~ToolsLoad()
 
 void ToolsLoad::Load( std::vector<Product*> & produts )
 {
-// 	con_color(11);
-// 	std::cout << "Enter filename that you want load \"Tools\":\n";
-// 	char nameFile[80];
-// 	con_color(15);
-// 	std::cin >> nameFile;
-	std::ifstream fin(TOOLSDATABASE, std::ios::in);
-
-	if (!fin.is_open())
-		std::cout << "Error opening file!\n";
-	else
+	try
 	{
-		produts.clear();
-		int i = 0;
-		while (!fin.eof())
+		std::ifstream fin(TOOLSDATABASE, std::ios::in);
+		fin.exceptions(std::ifstream::failbit);
+		if (!fin.is_open())
+			std::cout << "Error opening file tools load!\n";
+		else
 		{
-			if (m_pTI->m_numberTools < NUMBER_TOOLS )
-			{
-				m_pTI->m_ppToolsArray[m_pTI->m_numberTools++] = new Tools;
-				produts.push_back(m_pTI->m_ppToolsArray[m_pTI->m_numberTools-1]);
-			
+			fin.seekg (0, fin.end);
+			int length = (int)fin.tellg();
+			fin.seekg (0, fin.beg);
 
-				fin >> dynamic_cast<Tools*>(produts[i])->m_name_product;
-				fin >> dynamic_cast<Tools*>(produts[i])->m_quantity_product;
-				fin >> dynamic_cast<Tools*>(produts[i])->m_price_product;
-				fin >> dynamic_cast<Tools*>(produts[i])->m_type;
-				fin >> dynamic_cast<Tools*>(produts[i])->m_weight;
-				i++;
+			produts.clear();
+			int i = 0;
+			if (length)
+			{
+				m_pT = new Tools[NUMBER_TOOLS];
+				while (!fin.eof() && length)
+				{
+					if (i < NUMBER_TOOLS )
+					{
+						produts.push_back(&m_pT[i]);
+						fin >> dynamic_cast<Tools*>(produts[i])->m_name_product;
+						fin >> dynamic_cast<Tools*>(produts[i])->m_quantity_product;
+						fin >> dynamic_cast<Tools*>(produts[i])->m_price_product;
+						fin >> dynamic_cast<Tools*>(produts[i])->m_type;
+						fin >> dynamic_cast<Tools*>(produts[i])->m_weight;
+						i++;
+					}
+					else
+						break;
+				}
 			}
-			else
-				break;
 		}
-			fin.close();
-// 		con_color(11);
-// 		std::cout << "Your successfully load " << produts.size() << " tools\n";
-// 		con_color(15);
+		fin.close();
+	}
+	catch(std::ios_base::failure &fail)
+	{
+		std::cout << "Exception opening/reading file: " << fail.what() << std::endl;
 	}
 }

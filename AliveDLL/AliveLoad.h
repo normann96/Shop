@@ -13,5 +13,6 @@ public:
 protected:
 private:
 	AliveInput * m_pAI;
+	Alive *m_pAl;
 };
 #endif // AliveLoad_h__

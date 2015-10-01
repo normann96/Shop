@@ -9,12 +9,16 @@
 int _tmain(int argc, _TCHAR* argv[])
 {
 
-// 	int temp = SecurityInput::inputAnyInteger(2);
-// 	std::cout << temp << std::endl;
+	Shop *pMyShop;
+	try
+	{
+		pMyShop = new Shop;
+	}
+	catch (std::bad_alloc& ba)
+	{
+		std::cout << "bad_alloc caught: " << ba.what() << '\n';
+	}
 
-//	_getch();
-
-	Shop *pMyShop = new Shop;
 	do 
 	{
 		SecurityInput::clearScreen();
@@ -25,7 +29,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		switch(SecurityInput::inputAnyInteger(5))													// номер 5 - соответсвует количеству выборов меню
 		{
 			case 0: 
-					pMyShop->ExitAndSave();															// —охранить продукты и выйти
+					pMyShop->ExitAndSave();															// —охранить продукты и выйти	
 					break;
 			case 1:																					
 					pMyShop->Sell();																// ѕродать покупателю
