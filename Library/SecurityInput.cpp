@@ -9,7 +9,7 @@ static const unsigned int size = 64;
 static char buffer[size];
 static int a = 0;
 
-#define MAX_PATH 260
+#define MAX_PATH 10
 
 // Enter string, input first symbol
 char * SecurityInput::inputAnyChar()
